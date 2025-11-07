@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install and build backend
+        run: |
+          cd backend
+          npm ci
+      - name: Install and build frontend
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+      - name: Run simple smoke tests
+        run: |
+          echo "No tests present — placeholder"
+
+# Optional: add a deploy step using Render or other provider and set secrets accordingly.
+# For Render you'll typically use their GitHub integration instead of an action, or add an API key in secrets and call their API from here.
