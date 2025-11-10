@@ -1,0 +1,28 @@
+To run Backend:-
+cd "C:\Users\Nimesh\Todo-devops\backend"
+npm install
+npm start
+
+To run frontend:-
+cd "C:\Users\Nimesh\Todo-devops\frontend"
+npm install
+npm run dev
+
+To make changes and see in + pipeline
+cd "C:\Users\Nimesh\Todo-devops"
+
+# Stage the README change
+git add README.md
+
+# Commit (use the message below or change it)
+git commit -m "Test: trigger auto-deploy workflow"
+
+# Push to main
+git push origin main
+
+
+**to build 
+cd frontend
+npm run build**
+
+Hello
