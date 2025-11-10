@@ -85,4 +85,10 @@ Notes and assumptions:
 
 - This workflow assumes you want Render to perform the actual builds/start (Render's `render.yaml` is present). The workflow triggers Render deploys via the Deploy API.
 - If you prefer, you can configure Render to enable automatic deploys directly (Render can auto-deploy on push without a GitHub Action). This Action is useful when you also want the repo to run a build/test step before asking Render to deploy.
+
+## Quick test change
+
+This small line was added as a test change so you can verify the GitHub Actions workflow triggers and (if configured) Render deploys are requested.
+
+Test change added on 2025-11-10.
 >>>>>>> 8b9829f (working project)
