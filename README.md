@@ -15,7 +15,7 @@ Minimal fullstack Task Tracker with a React frontend and a Node/Express backend.
 Open a terminal and run these commands (Windows `cmd.exe`):
 
 ```cmd
-cd "c:\Users\shris\Documents\College\Study\Fourth Year\Sem 7\Agile_Lab\Task-Tracker\backend"
+cd "C:\Users\Nimesh\Todo-devops\backend"
 npm install
 npm start
 ```
@@ -23,7 +23,7 @@ npm start
 In another terminal:
 
 ```cmd
-cd "c:\Users\shris\Documents\College\Study\Fourth Year\Sem 7\Agile_Lab\Task-Tracker\frontend"
+cd "C:\Users\Nimesh\Todo-devops\frontend"
 npm install
 npm run dev
 ```
