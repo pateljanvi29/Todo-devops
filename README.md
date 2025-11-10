@@ -56,4 +56,33 @@ git push -u origin main
 3. You can enable automatic deploys on Render by connecting the repo.
 
 See `render.yaml` for an example manifest.
+
+## Auto-deploy with GitHub Actions + Render
+
+This repository includes a GitHub Actions workflow that can automatically build and trigger deploys on Render whenever you push to the `main` branch.
+
+What to configure in the GitHub repository settings (Settings → Secrets → Actions):
+
+- `RENDER_API_KEY` — a Render API key (create one in your Render account).
+- `RENDER_BACKEND_SERVICE_ID` — the Render service ID for the backend web service.
+- `RENDER_FRONTEND_SERVICE_ID` — the Render service ID for the frontend static site.
+
+How it works:
+
+1. The workflow runs on `push` to `main`.
+2. It installs dependencies and builds the frontend.
+3. It triggers a deploy on Render for the backend and frontend by calling the Render Deploy API (so Render pulls the latest commit and runs its build/start commands).
+
+How to get the Render service IDs:
+
+- After creating services on Render (or linking the repo), open the service's dashboard and note the service ID from the URL or API settings. You can also use the Render API to list services.
+
+Verify:
+
+- Push any change to `main`. The workflow `Auto Deploy to Render` (in `.github/workflows/auto-deploy.yml`) should run and show the API calls to Render in the `Trigger Render deploys` job.
+
+Notes and assumptions:
+
+- This workflow assumes you want Render to perform the actual builds/start (Render's `render.yaml` is present). The workflow triggers Render deploys via the Deploy API.
+- If you prefer, you can configure Render to enable automatic deploys directly (Render can auto-deploy on push without a GitHub Action). This Action is useful when you also want the repo to run a build/test step before asking Render to deploy.
 >>>>>>> 8b9829f (working project)
