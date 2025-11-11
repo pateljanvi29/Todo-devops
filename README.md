@@ -9,7 +9,7 @@ Minimal fullstack Task Tracker with a React frontend and a Node/Express backend.
 - `backend/` — simple Express API storing tasks in `db.json` (file-based). Start script: `npm start`.
 - `frontend/` — Vite + React app that calls the backend API and shows a simple progress chart.
 - `.github/workflows/ci.yml` — CI that installs and builds frontend & backend (placeholder deploy step).
-- `render.yaml` — example Render manifest to create a web service for backend and a static site for frontend.
+- `render.yaml` — example Render manifest to create a web service for backend and a static site for frontend
 
 ## Run locally (quick)
 Open a terminal and run these commands (Windows `cmd.exe`):
