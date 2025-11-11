@@ -1,0 +1,63 @@
+name: CI and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+      - name: Run simple smoke tests
+        run: echo "No tests present — placeholder"
+
+  trigger_deploys:
+    name: Trigger Render deploys
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trigger Render deploys via API
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          BACKEND_SERVICE_ID: ${{ secrets.RENDER_BACKEND_SERVICE_ID }}
+          FRONTEND_SERVICE_ID: ${{ secrets.RENDER_FRONTEND_SERVICE_ID }}
+        run: |
+          set -e
+          if [ -n "$BACKEND_SERVICE_ID" ]; then
+            echo "Triggering backend deploy..."
+            curl -X POST "https://api.render.com/v1/services/$BACKEND_SERVICE_ID/deploys" \
+              -H "Authorization: Bearer $RENDER_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{"clearCache": true}'
+          else
+            echo "No BACKEND_SERVICE_ID provided; skipping backend deploy."
+          fi
+
+          if [ -n "$FRONTEND_SERVICE_ID" ]; then
+            echo "Triggering frontend deploy..."
+            curl -X POST "https://api.render.com/v1/services/$FRONTEND_SERVICE_ID/deploys" \
+              -H "Authorization: Bearer $RENDER_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{"clearCache": true}'
+          else
+            echo "No FRONTEND_SERVICE_ID provided; skipping frontend deploy."
+          fi
